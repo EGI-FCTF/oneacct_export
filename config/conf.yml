@@ -22,6 +22,7 @@ defaults: &defaults
   xml_rpc:
     secret: oneadmin:opennebula # If not specified looking for secret in ONE_AUTH and ~/.one/one_auth
     endpoint: http://localhost:2633/RPC2 # Defaults to content of ONE_XMLRPC or content of ~/.one/one_endpoint or http://localhost:2633/RPC2
+    base_id: 0 # The base identifier to export accounting. I.e. if you had some other VMs that you do not want to export or if there were more consecutive VMs that are not in the included groups than the num_of_vms_per_file (in that later case, oneacct-export stops exporting
   redis:
     namespace: oneacct_export # Namespace used by redis for sidekiq jobs
     url: redis://localhost:6379 # URL of redis server, defaults to redis://localhost:6379

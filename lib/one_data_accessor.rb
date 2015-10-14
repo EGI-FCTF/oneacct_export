@@ -25,6 +25,8 @@ class OneDataAccessor
 
     @batch_size = Settings.output['num_of_vms_per_file'] ? Settings.output['num_of_vms_per_file'] : 500
     fail ArgumentError, 'Wrong number of vms per file.' unless number?(@batch_size)
+    @base_id = Settings.xml_rpc['base_id' ] ? Settings.xml_rpc['base_id' ] : 0
+    fail ArgumentError, 'Wrong base id.' unless is_number?(@base_id)
 
     @compatibility_vm_pool = nil
 
@@ -148,8 +150,9 @@ class OneDataAccessor
   def load_vm_pool(batch_number)
     fail ArgumentError, "#{batch_number} is not a valid number" unless number?(batch_number)
     @log.debug("Loading vm pool with batch number: #{batch_number}.")
-    from = batch_number * @batch_size
-    to = (batch_number + 1) * @batch_size - 1
+    @log.debug("Base VM identifier: #{@base_id}.")
+    from = @base_id + batch_number * @batch_size
+    to = @base_id + (batch_number + 1) * @batch_size - 1
 
     # if in compatibility mode, whole virtual machine pool has to be loaded for the first time
     if @compatibility
