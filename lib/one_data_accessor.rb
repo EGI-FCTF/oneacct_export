@@ -26,7 +26,7 @@ class OneDataAccessor
     @batch_size = Settings.output['num_of_vms_per_file'] ? Settings.output['num_of_vms_per_file'] : 500
     fail ArgumentError, 'Wrong number of vms per file.' unless number?(@batch_size)
     @base_id = Settings.xml_rpc['base_id' ] ? Settings.xml_rpc['base_id' ] : 0
-    fail ArgumentError, 'Wrong base id.' unless is_number?(@base_id)
+    fail ArgumentError, 'Wrong base id.' unless number?(@base_id)
 
     @compatibility_vm_pool = nil
 
